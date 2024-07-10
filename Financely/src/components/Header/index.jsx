@@ -1,12 +1,19 @@
-import React from 'react'
-import './style.css'
+import React from "react";
+import "./style.css";
 
-function index() {
+function Header() {
+  const logoutFunc = () => {
+    alert("Logout");
+  };
   return (
-    <div>
-      
+    <div className="navbar">
+      <p className="navbar-heading ">Financely.</p>
+
+      <p className="  navbar-link" onClick={logoutFunc}>
+        Logout
+      </p>
     </div>
-  )
+  );
 }
 
-export default index
+export default Header;
