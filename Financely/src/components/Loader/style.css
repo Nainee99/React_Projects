@@ -1,5 +1,13 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 90vh;
+}
+
 .loader {
-  color: #fff;
+  color: black;
   font-size: 10px;
   width: 1em;
   height: 1em;
