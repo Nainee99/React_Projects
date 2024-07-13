@@ -7,6 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 10;
 }
 
 .navbar-heading {
@@ -26,4 +27,14 @@
 .navbar-link:hover {
   color: #fff;
   transition: all 0.3s;
+}
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.profile-icon {
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
 }

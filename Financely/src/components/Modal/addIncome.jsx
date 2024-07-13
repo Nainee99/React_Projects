@@ -76,6 +76,17 @@ function AddIncomeModal({
             <Select.Option value="salary">Salary</Select.Option>
             <Select.Option value="freelance">Freelance</Select.Option>
             <Select.Option value="investment">Investment</Select.Option>
+            <Select.Option value="bonus">Bonus</Select.Option>
+            <Select.Option value="consulting">Consulting</Select.Option>
+            <Select.Option value="freelance_payment">
+              Freelance Payment
+            </Select.Option>
+            <Select.Option value="freelance_project">
+              Freelance Project
+            </Select.Option>
+            <Select.Option value="freelance_design">
+              Freelance Design
+            </Select.Option>
             {/* Add more tags here */}
           </Select>
         </Form.Item>

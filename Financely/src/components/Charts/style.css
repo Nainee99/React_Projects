@@ -1,0 +1,15 @@
+.chart-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+.title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center;
+}

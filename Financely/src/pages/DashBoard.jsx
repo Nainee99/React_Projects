@@ -7,9 +7,11 @@ import { db } from "../firebase/Firebase";
 import { collection, addDoc, getDocs, query } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/Firebase";
-import moment from "moment";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import TransactionTable from "../components/TransactionTable";
+import NoTransactions from "../components/NoTransaction";
+import Chart from "../components/Charts";
 
 const DashBoard = () => {
   const [user] = useAuthState(auth);
@@ -19,7 +21,6 @@ const DashBoard = () => {
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
-
   const [transactions, setTransactions] = useState([]);
 
   const showExpenseModal = () => {
@@ -41,7 +42,7 @@ const DashBoard = () => {
   const onFinish = (values, type) => {
     const newTransaction = {
       type: type,
-      date: moment(values.date).format("YYYY-MM-DD"),
+      date: values.date.format("YYYY-MM-DD"),
       amount: parseFloat(values.amount),
       tag: values.tag,
       name: values.name,
@@ -57,9 +58,7 @@ const DashBoard = () => {
       );
       console.log("Document written with ID: ", docRef.id);
       toast.success("Transaction Added!");
-      let newArr = transactions;
-      newArr.push(transaction);
-      setTransactions(newArr);
+      setTransactions((prevTransactions) => [...prevTransactions, transaction]);
       CalculateBalance();
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -80,7 +79,6 @@ const DashBoard = () => {
       const querySnapshot = await getDocs(q);
       let transactionsArray = [];
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
         transactionsArray.push(doc.data());
       });
       setTransactions(transactionsArray);
@@ -110,6 +108,17 @@ const DashBoard = () => {
     setTotalBalance(TotalIncome - TotalExpense);
   };
 
+  const resetBalance = () => {
+    setTotalBalance(0);
+    setIncome(0);
+    setExpense(0);
+    setTransactions([]);
+  };
+
+  const sortedTransactions = transactions.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
   return (
     <div>
       <Header />
@@ -123,6 +132,7 @@ const DashBoard = () => {
             expense={expense}
             showExpenseModal={showExpenseModal}
             showIncomeModal={showIncomeModal}
+            resetBalance={resetBalance}
           />
           <AddExpenseModal
             isExpenseModalVisible={isExpenseModalVisible}
@@ -136,6 +146,17 @@ const DashBoard = () => {
           />
         </>
       )}
+      {transactions.length !== 0 ? (
+        <Chart sortedTransactions={sortedTransactions} />
+      ) : (
+        <NoTransactions />
+      )}
+
+      <TransactionTable
+        transactions={transactions}
+        addTransaction={addTransaction}
+        fetchTransactions={fetchTransactions}
+      />
     </div>
   );
 };
