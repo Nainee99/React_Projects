@@ -72,7 +72,7 @@ const ContextProvider = (props) => {
     setRecentPrompt,
     recentPrompt,
     showResult,
-    setShowResult, // Ensure setShowResult is included in context value
+    setShowResult, 
     loading,
     setLoading,
     resultData,
